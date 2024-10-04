@@ -3,9 +3,11 @@ package com.example.student_courses.controllers;
 import com.example.student_courses.dtos.CourseDto;
 import com.example.student_courses.models.Course;
 import com.example.student_courses.services.CourseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,13 +22,25 @@ public class MainController {
         this.courseService = courseService;
     }
 
+    @Operation(summary = "Get all courses", description = "Get all available for registration courses")
     @GetMapping("/v1/courses")
-    public List<CourseDto> getAllCourses() {
+    public List<CourseDto> getAllAvailableCourses() {
         return courseService.getAllCourses()
                 .stream()
+                .filter(c -> c.getBookedSeats() == c.getTotalSeats())
                 .map(this::convertToCourseDto)
                 .collect(Collectors.toList());
     }
+
+    @PostMapping("v1/courses")
+    public ResponseEntity<HttpStatus> registrateOnCourse(
+            @RequestParam int studentId,
+            @RequestParam Long courseId
+    ) {
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
 
     private CourseDto convertToCourseDto(Course course) {
         CourseDto courseDto = new CourseDto();
