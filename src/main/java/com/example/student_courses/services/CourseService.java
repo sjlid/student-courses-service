@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,8 @@ public class CourseService {
     public void registerOnCourse(long studentId, long courseId) {
 
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course with this id doesn't exist"));
-        LocalDateTime currentTime = LocalDateTime.now();
+        ZonedDateTime currentTime = ZonedDateTime.now();
+
 
         if (currentTime.isBefore(course.getStartTime()) || currentTime.isAfter(course.getEndTime())) {
             throw new RuntimeException("Registration isn't allowed now");
