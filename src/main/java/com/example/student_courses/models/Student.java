@@ -21,5 +21,5 @@ public class Student {
     private String name;
 
     @NotBlank(message = "Student's name must be filled")
-    private int studentId;
+    private Long studentId;
 }

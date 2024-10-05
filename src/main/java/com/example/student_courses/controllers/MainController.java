@@ -2,6 +2,7 @@ package com.example.student_courses.controllers;
 
 import com.example.student_courses.dtos.CourseDto;
 import com.example.student_courses.models.Course;
+import com.example.student_courses.models.Student;
 import com.example.student_courses.services.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpEntity;
@@ -25,19 +26,19 @@ public class MainController {
     @Operation(summary = "Get all courses", description = "Get all available for registration courses")
     @GetMapping("/v1/courses")
     public List<CourseDto> getAllAvailableCourses() {
-        return courseService.getAllCourses()
+        return courseService.getAvailableCourses()
                 .stream()
-                .filter(c -> c.getBookedSeats() == c.getTotalSeats())
+                .filter(c -> c.getBookedSeats() < c.getTotalSeats())
                 .map(this::convertToCourseDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("v1/courses")
-    public ResponseEntity<HttpStatus> registrateOnCourse(
-            @RequestParam int studentId,
+    public ResponseEntity<HttpStatus> registerOnCourse(
+            @RequestParam Long studentId,
             @RequestParam Long courseId
     ) {
-
+        courseService.registerOnCourse(studentId, courseId);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
