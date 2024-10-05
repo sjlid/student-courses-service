@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "students")
+@Table(name = "students", indexes = @Index(columnList = "student_id"))
 public class Student {
 
     @Id
