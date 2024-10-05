@@ -49,7 +49,6 @@ public class CourseService {
 
         Student student = studentRepository.findByStudentId(studentId).orElseThrow(() -> new RuntimeException("Student with this StudentID doesn't exist"));
 
-        //registrationRepository.findByCourseIdAndStudentId(courseId, student.getId()).orElseThrow(() -> new RuntimeException("Student is already register to this course"));
         Optional<Registration> existingEnrollment = registrationRepository.findByCourseIdAndStudentId(courseId, student.getId());
         if (existingEnrollment.isPresent()) {
             throw new RuntimeException("Student is already enrolled in this course");
