@@ -2,16 +2,17 @@ package com.example.student_courses.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Table(name = "courses")
 public class Course {
 

@@ -2,15 +2,16 @@ package com.example.student_courses.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "students", indexes = @Index(columnList = "student_id"))
+@EqualsAndHashCode
+@ToString
+@Table(name = "students", indexes = @Index(columnList = "student_card"))
 public class Student {
 
     @Id
@@ -20,6 +21,6 @@ public class Student {
     @NotBlank(message = "Student's name must be filled")
     private String name;
 
-    @NotBlank(message = "Student's name must be filled")
-    private Long studentId;
+    @NotBlank(message = "Student's card number must be filled")
+    private Long studentCard;
 }

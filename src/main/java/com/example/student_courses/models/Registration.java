@@ -1,10 +1,15 @@
 package com.example.student_courses.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Table(name = "registrations")
 public class Registration {
 

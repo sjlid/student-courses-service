@@ -1,4 +1,4 @@
-INSERT INTO public.students (name, student_id)
+INSERT INTO public.students (name, student_card)
 VALUES ('Петр Петров', 111111),
 ('Иван Иванов', 222222),
 ('Максим Максимович', 333333),

@@ -29,21 +29,19 @@ public class MainController {
     public List<CourseDto> getAllAvailableCourses() {
         return courseService.getAvailableCourses()
                 .stream()
-                .filter(c -> c.getBookedSeats() < c.getTotalSeats())
-                .filter(c -> c.getEndTime().isAfter(ZonedDateTime.now()))
                 .map(this::convertToCourseDto)
                 .collect(Collectors.toList());
     }
 
     @Operation(summary = "Registration to course", description = "Students can register on courses here")
-    @PostMapping("v1/courses")
+    @PostMapping("/v1/registration")
     public ResponseEntity<HttpStatus> registerOnCourse(
-            @Parameter(description = "Student ID of student. Don't mess with id from DB", required = true)
-            @RequestParam Long studentId,
+            @Parameter(description = "Number of student card", required = true)
+            @RequestParam Long studentCard,
             @Parameter(description = "Course ID. It's the same as in DB", required = true)
             @RequestParam Long courseId
     ) {
-        courseService.registerOnCourse(studentId, courseId);
+        courseService.registerOnCourse(studentCard, courseId);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
