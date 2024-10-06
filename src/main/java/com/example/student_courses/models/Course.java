@@ -11,7 +11,6 @@ import java.time.ZonedDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @ToString
 @Table(name = "courses")
 public class Course {
@@ -35,4 +34,21 @@ public class Course {
 
     @Column(name = "end_time")
     private ZonedDateTime endTime;
+
+    @Override
+    public int hashCode() {
+        return 17;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Course other = (Course) obj;
+        return id != null && id.equals(other.getId());
+    }
 }
