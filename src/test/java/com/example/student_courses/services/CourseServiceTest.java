@@ -106,27 +106,27 @@ public class CourseServiceTest {
     }
 
 
-     @Test
-     public void testGetAllCourses_FilterClosedEnrollment() {
-         Course closedCourse = new Course();
-         closedCourse.setId(2L);
-         closedCourse.setCourseName("Closed Course");
-         closedCourse.setTotalSeats(2);
-         closedCourse.setBookedSeats(0);
-         closedCourse.setEndTime(ZonedDateTime.now().minusDays(1));
+    @Test
+    public void testGetAllCourses_FilterClosedEnrollment() {
+        Course closedCourse = new Course();
+        closedCourse.setId(2L);
+        closedCourse.setCourseName("Closed Course");
+        closedCourse.setTotalSeats(2);
+        closedCourse.setBookedSeats(0);
+        closedCourse.setEndTime(ZonedDateTime.now().minusDays(1));
 
-         Course openCourse = new Course();
-         openCourse.setId(1L);
-         openCourse.setCourseName("Open Course");
-         openCourse.setTotalSeats(2);
-         openCourse.setBookedSeats(0);
-         openCourse.setEndTime(ZonedDateTime.now().plusDays(1));
+        Course openCourse = new Course();
+        openCourse.setId(1L);
+        openCourse.setCourseName("Open Course");
+        openCourse.setTotalSeats(2);
+        openCourse.setBookedSeats(0);
+        openCourse.setEndTime(ZonedDateTime.now().plusDays(1));
 
-         when(courseRepository.findAll()).thenReturn(Collections.singletonList(openCourse));
-         List<Course> result = courseService.getAvailableCourses();
+        when(courseRepository.findAll()).thenReturn(Collections.singletonList(openCourse));
+        List<Course> result = courseService.getAvailableCourses();
 
-         assertThat(result).containsExactly(openCourse);
-     }
+        assertThat(result).containsExactly(openCourse);
+    }
 
 
 }
