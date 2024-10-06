@@ -10,6 +10,10 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<Course> findById(Long id);
+    default Optional<Course> findByIdForUpdate(Long courseId) {
+        return findById(courseId);
+    }
+
 }

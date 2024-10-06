@@ -54,7 +54,7 @@ public class CourseServiceTest {
 
     @Test
     public void testEnrollStudent_Success() {
-        when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
+        when(courseRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(course));
         when(studentRepository.findByStudentCard(123123L)).thenReturn(Optional.of(student));
         when(registrationRepository.findByCourseIdAndStudentId(1L, student.getId())).thenReturn(Optional.empty());
 
@@ -66,7 +66,7 @@ public class CourseServiceTest {
 
     @Test
     public void testEnrollStudent_AlreadyEnrolled() {
-        when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
+        when(courseRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(course));
         when(studentRepository.findByStudentCard(123123L)).thenReturn(Optional.of(student));
         when(registrationRepository.findByCourseIdAndStudentId(1L, student.getId())).thenReturn(Optional.of(new Registration()));
 
@@ -81,7 +81,7 @@ public class CourseServiceTest {
     @Test
     public void testEnrollStudent_NoAvailableSeats() {
         course.setBookedSeats(2);
-        when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
+        when(courseRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(course));
 
         assertThatThrownBy(() -> courseService.registerOnCourse(123123L, 1L))
                 .isInstanceOf(RuntimeException.class)
@@ -95,7 +95,7 @@ public class CourseServiceTest {
     @Test
     public void testEnrollStudent_EnrollmentWindowClosed() {
         course.setStartTime(ZonedDateTime.now().plusDays(1));
-        when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
+        when(courseRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(course));
 
         assertThatThrownBy(() -> courseService.registerOnCourse(123123L, 1L))
                 .isInstanceOf(RuntimeException.class)

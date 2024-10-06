@@ -6,6 +6,7 @@ import com.example.student_courses.models.Student;
 import com.example.student_courses.repositories.CourseRepository;
 import com.example.student_courses.repositories.RegistrationRepository;
 import com.example.student_courses.repositories.StudentRepository;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +35,8 @@ public class CourseService {
 
     @Transactional
     public void registerOnCourse(long studentCard, long courseId) {
-
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course with this id doesn't exist"));
+        Course course = courseRepository.findByIdForUpdate(courseId).orElseThrow(() -> new RuntimeException("Course with this id doesn't exist"));
         ZonedDateTime currentTime = ZonedDateTime.now();
-
 
         if (currentTime.isBefore(course.getStartTime()) || currentTime.isAfter(course.getEndTime())) {
             throw new RuntimeException("Registration isn't allowed now");
